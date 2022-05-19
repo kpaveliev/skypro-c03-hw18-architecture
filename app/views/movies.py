@@ -3,8 +3,6 @@ from flask import request
 from marshmallow import ValidationError
 
 from app.dao.model.movie import MovieSchema
-from app.dao.model.genre import Genre
-from app.dao.model.director import Director
 from app.containter import movie_service
 
 # Declare namespace and define marshmallow schema
@@ -34,13 +32,13 @@ class MoviesViews(Resource):
     @movie_ns.response(200, 'Success', movie_model)
     @movie_ns.response(404, 'Not found')
     def get(self):
-        # Get filter from request
+
         filters = {
             'director_id': request.args.get('director_id', type=int),
             'genre_id': request.args.get('genre_id', type=int),
             'year': request.args.get('year', type=int)
         }
-        print(filters)
+
         movies_found = movie_service.filter(filters)
 
         if not movies_found:
@@ -52,13 +50,14 @@ class MoviesViews(Resource):
     @movie_ns.response(201, 'Created')
     @movie_ns.response(400, 'ValidationError')
     def post(self):
-        # Get data from request and serialize
+        # Get data from request and serialize it
         try:
             data = movie_schema.load(request.json)
-        # Throw bad request wrong if fields passed
+
+        # Throw bad request if wrong fields passed
         except ValidationError as e:
             return f"{e}", 400
-        # Add data to the database
+
         else:
             movie = movie_service.create(data)
             return f"Data added with id: {movie.id}", 201, {"location": f"/movies/{movie.id}"}
@@ -70,12 +69,13 @@ class MovieView(Resource):
     @movie_ns.response(200, 'Success', movie_model)
     @movie_ns.response(404, 'Not found')
     def get(self, uid):
-        # Find required row
+        # Find row
         movie = movie_service.get_one(uid)
+
         # Throw not found if uid not found
         if not movie:
             return f"Movie with the id: {uid} not found", 404
-        # Display found object
+
         else:
             return movie_schema.dump(movie), 200
 
@@ -105,10 +105,11 @@ class MovieView(Resource):
     def delete(self, uid):
         # Find required row
         movie = movie_service.get_one(uid)
+
         # Throw not found if uid not found
         if not movie:
             return f"Movie with the id: {uid} not found", 404
-        # Write deletion
+
         else:
             movie_service.delete(uid)
             return "", 204

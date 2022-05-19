@@ -1,11 +1,15 @@
-from flask import Flask, render_template
-app = Flask(__name__)
+from typing import List
+
+from app.dao.model.director import Director
+from app.dao.director import DirectorDAO
 
 
-@app.route('/')
-def index():
-    return render_template('index.html')
+class DirectorService:
+    def __init__(self, dao: DirectorDAO) -> None:
+        self.dao = dao
 
-if __name__ == '__main__':
-  app.run(host:'127.0.0.1', port=8000, debug=True)
+    def get_all(self) -> List[Director]:
+        return self.dao.get_all()
 
+    def get_one(self, uid: int) -> Director:
+        return self.dao.get_one(uid)

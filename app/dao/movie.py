@@ -1,11 +1,14 @@
 from typing import List
+from sqlalchemy.orm import Session
+
 from app.dao.model.movie import Movie
 
+
 class MovieDAO:
-    def __init__(self, session):
+    def __init__(self, session: Session) -> None:
         self.session = session
 
-    def get_all(self) -> Movie:
+    def get_all(self) -> List[Movie]:
         return self.session.query(Movie).all()
 
     def get_one(self, uid) -> Movie:
@@ -26,7 +29,7 @@ class MovieDAO:
         self.session.delete(movie)
         self.session.commit()
 
-    def filter(self, filters: dict) -> List['Movie']:
+    def filter(self, filters: dict) -> List[Movie]:
         movies = self.session.query(Movie)
 
         if filters['director_id']:
