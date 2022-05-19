@@ -5,28 +5,26 @@
 
 **Structure**
 
-├── run.py \
-├── requirements.txt \
-├── README.MD \
-├── data \
-│   └── movies.db - database \
-└── app \
-    └── dao \
-    │   └── model - SQLAclhemy models and marshmallow schemes\
-    │       ├── movie.py \
-    │       ├── director.py \
-    │       └── genre.py \
-    ├── service \
-    │   ├── movie.py \
-    │   ├── director.py \
-    │   └── genre.py \
-    ├── views \
-    │   ├── movies.py \
-    │   ├── directors.py \
-    │   └── genres.py \
-    ├── containter.py - create DAO and Services \
-    ├── config.py - app configuration parameters \
-    └── setup_db.py - set up database \
+1. run.py
+2. requirements.txt
+3. data/movies.db
+4. app
+   1. dao
+      1. model/movie.py, director.py, genre.py
+      2. movie.py
+      3. director.py
+      4. genre.py
+   2. service 
+      1. movie.py 
+      2. director.py 
+      3. genre.py
+   3. views
+      1. movie.py 
+      2. director.py 
+      3. genre.py
+   4. container.py
+   5. config.py
+   6. setup_db.py
 
 
 Kirill Paveliev\
