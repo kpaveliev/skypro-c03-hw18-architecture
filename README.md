@@ -1,8 +1,6 @@
 # SkyPro.Python course
 ## Homework 18. Flask-Restx architecture
 
-**Content**
-
 **Structure**
 
 1. run.py
